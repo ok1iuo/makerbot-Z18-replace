@@ -39,7 +39,7 @@
 ## Původní MakerBot Z18
 
 - Osa Z: jeden krokový motor (zdroj: uživatel, stroj).
-- Krokové motory X, Y, Z: typ a jmenovitý proud neznámé (štítky nepřístupné, na internetu nenalezeno). Odpor cívky 7,5 Ω u všech tří (měřeno multimetrem, uživatel, 2026-11-11). Odhad jmenovitého proudu 0,4–0,7 A z typického jmenovitého napětí NEMA 17 2,5–5 V – neověřeno. Testovací `run_current` proto 0,35 A.
+- Krokové motory X, Y, Z: typ a jmenovitý proud neznámé (štítky nepřístupné, na internetu nenalezeno). Odpor cívky 7,5 Ω u obou cívek všech tří motorů (měřeno multimetrem na každé dvojici vodičů, uživatel, 2026-11-11). Odhad jmenovitého proudu 0,4–0,7 A z typického jmenovitého napětí NEMA 17 2,5–5 V – neověřeno. Testovací `run_current` proto 0,35 A.
 - Pro srovnání (jiný stroj): Replicator 5. generace má na X/Y motor SM42HT38C-1004AF s cívkou 4,1 Ω (zdroj: [makerbot-users](https://groups.google.com/g/makerbot-users/c/7FOeKLHlUgw), neověřeno).
 
 Doplnit: krokové motory (typ, proud, krok), endstopy, extruder / tisková hlava, vyhřívaná komora, napájecí zdroj, ventilátory, displej.

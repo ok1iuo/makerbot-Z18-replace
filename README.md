@@ -5,7 +5,8 @@ Přestavba tiskárny MakerBot Replicator Z18 z původní elektroniky a firmwaru 
 ## Struktura
 
 - `docs/` – dokumentace: původní hardware, nový hardware, zapojení, postup přestavby
-- `docs/raspberry-pi.md` – instalace hostitele Klipperu
+- `docs/raspberry-pi.md` – instalace hostitele Klipperu, překlad a nahrání firmwaru Octopus Pro
+- `docs/test-motoru.md` – postup testu krokových motorů
 - `klipper/` – konfigurace Klipperu (`printer.cfg` a související soubory); zatím jen testovací konfigurace pro motory
 - `klipper/firmware/` – konfigurace pro překlad firmwaru desek (`make menuconfig`)
 

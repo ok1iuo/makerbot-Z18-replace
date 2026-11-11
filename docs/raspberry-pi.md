@@ -53,7 +53,27 @@ Volby `make menuconfig` (zdroj: hlavička `~/klipper/config/generic-bigtreetech-
 
 Úplná konfigurace je v `klipper/firmware/octopus-pro-h723.config`; na Pi ji obnovíš zkopírováním do `~/klipper/.config` a `make olddefconfig`. Výsledek z Klipperu v0.13.0-816-gee2c6fb6: `~/klipper/out/klipper.bin`, 49 024 B, SHA-256 `be699dc590062a82a617a00f184bbfd8a7ebc3e0738fffe198447e7b6ea0fe92`.
 
-Nahrání (neověřeno na této desce): `klipper.bin` přejmenovat na `firmware.bin`, nahrát na microSD (FAT32), vložit do Octopusu a zapnout; po úspěchu se soubor přejmenuje na `FIRMWARE.CUR`.
+### Nahrání přes USB z Pi (hlavní cesta, na této desce zatím neověřeno)
+
+Režim DFU je zavaděč v pevné paměti STM32. `make flash` volá `scripts/flash_usb.py`, který pro STM32H7 spustí `dfu-util` se startovací adresou z `.config` (`0x8020000`), takže zavaděč BTT zůstane netknutý (ověřeno čtením `scripts/flash_usb.py` na Pi, 2026-11-11). `dfu-util` 0.11 je na Pi nainstalovaný.
+
+1. Bez napájení nasadit na Octopus propojku BOOT0 (umístění na V1.1 ověřit podle desky).
+2. Propojit Octopus s Pi kabelem USB-C, zapnout napájení.
+3. `lsusb` – musí ukázat `0483:df11 ... STM Device in DFU Mode`.
+4. Nahrát:
+   ```
+   cd ~/klipper
+   sudo service klipper stop
+   make flash FLASH_DEVICE=0483:df11
+   sudo service klipper start
+   ```
+5. Vypnout napájení, sundat propojku BOOT0, zapnout.
+
+V režimu „USB to CAN bridge“ se deska nehlásí jako sériový port, takže každá další aktualizace firmwaru znovu potřebuje propojku BOOT0 (nebo doinstalovat zavaděč Katapult pro aktualizace přes CAN). Přerušené nahrávání (např. restart Pi při podpětí) desku nezničí – postup stačí zopakovat.
+
+### Nahrání z microSD (záloha)
+
+`klipper.bin` přejmenovat na `firmware.bin`, nahrát na microSD (FAT32), vložit do Octopusu a resetovat; po úspěchu se soubor přejmenuje na `FIRMWARE.CUR` (zdroj: [BTT wiki – Octopus Pro](https://global.bttwiki.com/Octopus%20Pro.html)).
 
 Rozhraní `can0` na Pi: dokumentace Klipperu (`docs/CANBUS.md`) počítá s `/etc/network/interfaces.d/can0` (ifupdown), Pi ale používá NetworkManager (`systemctl is-enabled` 2026-11-11: NetworkManager enabled, systemd-networkd disabled) – způsob nastavení vyřešit po připojení desky.
 
