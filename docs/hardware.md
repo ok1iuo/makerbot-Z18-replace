@@ -13,8 +13,9 @@
 
 ## Napájení
 
-- Zdroj 24 V / 500 W (zdroj: uživatel; výrobce, model a zda jde o původní zdroj Z18 – doplnit). Proud 500 W / 24 V ≈ 20,8 A.
+- Nový zdroj 24 V / 500 W, ne původní ze Z18 (zdroj: uživatel; výrobce a model – doplnit). Proud 500 W / 24 V ≈ 20,8 A.
 - Polaritu a napětí výstupu před prvním připojením k Octopus Pro změřit multimetrem.
+- Původní elektronika Z18 byla napájená 12 V (zdroj: uživatel, 2026-11-11). Původní 12V spotřebiče (ventilátory, topení komory, případně další) nesmí na 24 V – u každého před připojením ověřit napětí.
 
 ## Přiřazení driverů (rozhodnuto 2026-11-03)
 
@@ -38,5 +39,7 @@
 ## Původní MakerBot Z18
 
 - Osa Z: jeden krokový motor (zdroj: uživatel, stroj).
+- Krokové motory X, Y, Z: typ a jmenovitý proud neznámé (štítky nepřístupné, na internetu nenalezeno). Odpor cívky 7,5 Ω u všech tří (měřeno multimetrem, uživatel, 2026-11-11). Odhad jmenovitého proudu 0,4–0,7 A z typického jmenovitého napětí NEMA 17 2,5–5 V – neověřeno. Testovací `run_current` proto 0,35 A.
+- Pro srovnání (jiný stroj): Replicator 5. generace má na X/Y motor SM42HT38C-1004AF s cívkou 4,1 Ω (zdroj: [makerbot-users](https://groups.google.com/g/makerbot-users/c/7FOeKLHlUgw), neověřeno).
 
 Doplnit: krokové motory (typ, proud, krok), endstopy, extruder / tisková hlava, vyhřívaná komora, napájecí zdroj, ventilátory, displej.
