@@ -39,7 +39,16 @@
 ## Původní MakerBot Z18
 
 - Osa Z: jeden krokový motor (zdroj: uživatel, stroj).
-- Krokové motory X, Y, Z: typ a jmenovitý proud neznámé (štítky nepřístupné, na internetu nenalezeno). Odpor cívky 7,5 Ω u obou cívek všech tří motorů (měřeno multimetrem na každé dvojici vodičů, uživatel, 2026-11-11). Odhad jmenovitého proudu 0,4–0,7 A z typického jmenovitého napětí NEMA 17 2,5–5 V – neověřeno. Testovací `run_current` proto 0,35 A.
+- Krokové motory X, Y: štítek „MS17HD2P4100-05“ (zdroj: uživatel, 2026-11-11, písmeno D potvrzeno; přípona -05 v katalogu není, zřejmě zakázková varianta pro MakerBot). Katalog Moons' MS17 (zdroj: [katalog MS17](https://devel.lulzbot.com/retail_parts/Moons_Motor_KT-MT0003/MS17-series.pdf), str. 7; lokální kopie `docs/zdroje/Moons-MS17-series.pdf`) pro MS17HD2P4100: 4 vodiče (bipolární), délka 39,8 mm, jmenovitý proud 1 A, přídržný moment 0,48 Nm, odpor vinutí 3,9 Ω ±10 %, indukčnost 8,9 mH, izolace třídy B (130 °C).
+- Krokový motor Z: typ neznámý.
+- Odpor cívky 7,5 Ω u obou cívek všech tří motorů (měřeno multimetrem na každé dvojici vodičů, uživatel, 2026-11-11) – u X/Y v rozporu s katalogem (3,9 Ω); ověřit přeměřením přímo na motoru. Testovací `run_current` 0,35 A; strop pro X/Y 1 A podle katalogu.
+- Z teardown guide MakerBotu (2016, [alloys.com.au](https://www.alloys.com.au/documents/Z18%20Teardown%20Guide.pdf); lokální kopie `docs/zdroje/Z18-Teardown-Guide.pdf`):
+  - X/Y: dva „Gantry Motors“ vzadu po stranách gantry; kabel k vozíku plochým kabelem (FFC) přes Rikers PCB (horní část zadního pravého sloupku).
+  - Z: motor v zásuvkové části dole („Drawer Bay“), pohání řemenem („Z-Stage Belt“) závitové tyče stolu – `rotation_distance` osy Z tedy závisí na převodu řemenu i stoupání tyčí.
+  - Vyhřívaná komora: dvě topné spirály („Heating Coil Assembly“) vzadu, termistor spirály, ventilátor topení („Heater Fan“) na Gowanus PCB; okolní termistor („Ambient Thermistor“) na gantry.
+  - Desky: Brooklyn PCB (hlavní, 20pinové napájení ze zdroje), Gowanus PCB (zadní elektronika), Rikers PCB, Red Hook PCB (přední levý sloupek, spínač dveří – „Interlock Door Cable“).
+  - Zdroj v zásuvkové části, zezadu 4 bezpečnostní šrouby Torx T10.
+  - Typ ani parametry motorů návod neuvádí.
 - Pro srovnání (jiný stroj): Replicator 5. generace má na X/Y motor SM42HT38C-1004AF s cívkou 4,1 Ω (zdroj: [makerbot-users](https://groups.google.com/g/makerbot-users/c/7FOeKLHlUgw), neověřeno).
 
 Doplnit: krokové motory (typ, proud, krok), endstopy, extruder / tisková hlava, vyhřívaná komora, napájecí zdroj, ventilátory, displej.
