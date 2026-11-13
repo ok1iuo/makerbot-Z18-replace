@@ -19,7 +19,7 @@
 
 ## Přiřazení driverů (rozhodnuto 2026-11-03)
 
-- X, Y, Z: po jednom TMC5160T (osa Z má jeden motor – zdroj: uživatel, stroj).
+- Motor A a B pohonu hlavy (H-bot, v Klipperu `stepper_x` a `stepper_y` kinematiky `corexy`) a motor osy Z: po jednom TMC5160T (osa Z má jeden motor – zdroj: uživatel, stroj).
 - 4. TMC5160T: rezerva.
 - Extruder: driver na EBB36.
 - Konkrétní sloty na Octopus Pro určit při zapojení.
@@ -39,11 +39,16 @@
 ## Původní MakerBot Z18
 
 - Osa Z: jeden krokový motor (zdroj: uživatel, stroj).
-- Krokové motory X, Y: štítek „MS17HD2P4100-05“ (zdroj: uživatel, 2026-11-11, písmeno D potvrzeno; přípona -05 v katalogu není, zřejmě zakázková varianta pro MakerBot). Katalog Moons' MS17 (zdroj: [katalog MS17](https://devel.lulzbot.com/retail_parts/Moons_Motor_KT-MT0003/MS17-series.pdf), str. 7; lokální kopie `docs/zdroje/Moons-MS17-series.pdf`) pro MS17HD2P4100: 4 vodiče (bipolární), délka 39,8 mm, jmenovitý proud 1 A, přídržný moment 0,48 Nm, odpor vinutí 3,9 Ω ±10 %, indukčnost 8,9 mH, izolace třídy B (130 °C).
+- Kinematika pohybu hlavy: H-bot – oba motory pohonu hlavy (vzadu po stranách) pohánějí jeden společný řemen spojený s vozíkem (zdroj: uživatel, 2026-11-13). Klipper H-bot obsluhuje kinematikou `corexy` (zdroj: `~/klipper/config/example-corexy.cfg` a `docs/Config_Reference.md` na Pi, Klipper v0.13.0-816).
+- Motory pohonu hlavy (A, B) – ražba přečtená z fotek uživatele (2026-11-13), číslice s malou nejistotou:
+  - motor A: „MOONS' STEPPING MOTOR / TYPE 17HD6445-10N / 6035220 14.05.18“
+  - motor B: „MOONS' STEPPING MOTOR / TYPE 17HD6446-02N / 6008220 14/06/18“
+  - Oba typy v katalozích Moons' chybí (zakázkové varianty). Řada 17HD6 je dvoustupňová (rotor 82 g·cm², délka kolem 48 mm); katalogový sourozenec 17HD6017N: odpor 7,5 Ω, indukčnost 14 mH, jmenovitý proud 0,8 A, přídržný moment 0,49 Nm (zdroj: [katalog Moons' hybrid steppers](https://cdn.shopify.com/s/files/1/0180/7671/files/Moons-hybrid-steppermotors.pdf), tabulka 17HD6) – shoda s naměřenými 7,5 Ω. Pracovní předpoklad: jmenovitý proud kolem 0,8 A (neověřeno).
+  - Dříve uvedený MS17HD2P4100-05 (1 A, 3,9 Ω) pochází z internetu, ne ze stroje – pro tuto Z18 neplatí.
 - Krokový motor Z: typ neznámý.
-- Odpor cívky 7,5 Ω u obou cívek všech tří motorů (měřeno multimetrem na každé dvojici vodičů, uživatel, 2026-11-11) – u X/Y v rozporu s katalogem (3,9 Ω); ověřit přeměřením přímo na motoru. Testovací `run_current` 0,35 A; strop pro X/Y 1 A podle katalogu.
+- Odpor cívky 7,5 Ω u obou cívek všech tří motorů (měřeno multimetrem na každé dvojici vodičů, uživatel, 2026-11-11). Testovací `run_current` 0,35 A; strop 0,8 A podle katalogového sourozence.
 - Z teardown guide MakerBotu (2016, [alloys.com.au](https://www.alloys.com.au/documents/Z18%20Teardown%20Guide.pdf); lokální kopie `docs/zdroje/Z18-Teardown-Guide.pdf`):
-  - X/Y: dva „Gantry Motors“ vzadu po stranách gantry; kabel k vozíku plochým kabelem (FFC) přes Rikers PCB (horní část zadního pravého sloupku).
+  - Pohon hlavy: dva „Gantry Motors“ vzadu po stranách gantry; kabel k vozíku plochým kabelem (FFC) přes Rikers PCB (horní část zadního pravého sloupku).
   - Z: motor v zásuvkové části dole („Drawer Bay“), pohání řemenem („Z-Stage Belt“) závitové tyče stolu – `rotation_distance` osy Z tedy závisí na převodu řemenu i stoupání tyčí.
   - Vyhřívaná komora: dvě topné spirály („Heating Coil Assembly“) vzadu, termistor spirály, ventilátor topení („Heater Fan“) na Gowanus PCB; okolní termistor („Ambient Thermistor“) na gantry.
   - Desky: Brooklyn PCB (hlavní, 20pinové napájení ze zdroje), Gowanus PCB (zadní elektronika), Rikers PCB, Red Hook PCB (přední levý sloupek, spínač dveří – „Interlock Door Cable“).
