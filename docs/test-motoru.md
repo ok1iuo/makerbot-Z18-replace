@@ -12,7 +12,7 @@ Konfigurace: `klipper/printer.cfg` (fáze 1 – jen motory, bez topení a koncov
 
 ## Zapojení
 
-1. Na každém motoru označit dvojice vodičů (cívky, 7,5 Ω uvnitř dvojice, mezi dvojicemi nekonečno), např. páskou 1 a 2.
+1. Na každém motoru označit dvojice vodičů (cívky, 7,5 Ω uvnitř dvojice, mezi dvojicemi nekonečno), např. páskou 1 a 2. Původní kabely jsou ploché 4žilové (popsané H, V, Z) v jednom 16pinovém konektoru IDC – měřit po žilách plochého kabelu; pokud jsou páry žíly 1–2 a 3–4, stačí zachovat jejich pořadí v novém 4pinovém konektoru.
 2. Na konektor Octopusu jedna dvojice na piny 1–2, druhá na piny 3–4. Pořadí pinů ověřit podle potisku na spodní straně desky (obvykle `2B 2A 1A 1B`, každá cívka na sousedních pinech – neověřeno).
 3. Sloty: motor H pohonu hlavy → Driver0 (`stepper_x`), motor V → Driver1 (`stepper_y`), motor Z → Driver2 (Driver3 = rezervní TMC5160T). Z18 má kinematiku H-bot: jeden motor sám hlavou pohne šikmo nebo po jedné ose podle toho, jak je řemen vedený, ne čistě v X nebo Y – při `STEPPER_BUZZ` je to v pořádku.
 4. Bez napájení posunout vozík a stůl rukou doprostřed.

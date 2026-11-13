@@ -41,6 +41,9 @@
 - Osa Z: jeden krokový motor (zdroj: uživatel, stroj).
 - Kinematika pohybu hlavy: H-bot – oba motory pohonu hlavy (vzadu po stranách) pohánějí jeden společný řemen spojený s vozíkem (zdroj: uživatel, 2026-11-13). Klipper H-bot obsluhuje kinematikou `corexy` (zdroj: `~/klipper/config/example-corexy.cfg` a `docs/Config_Reference.md` na Pi, Klipper v0.13.0-816).
 - Označení motorů na stroji: H a V (pohon hlavy), Z (zdroj: uživatel, 2026-11-13).
+  - Umístění (fotka uživatele zezadu, 2026-11-13): motory H a V nahoře v zadních rozích; při pohledu zezadu V vlevo, H vpravo (zepředu tedy obráceně).
+  - Pohon hlavy (fotka shora): dvě rovnoběžné lineární vedení po stranách, příčné vedení s vozíkem, řemen s kladkami ve čtyřech rozích.
+  - Původní kabeláž: každý motor plochým 4žilovým kabelem (ploché kabely ručně popsané Z, V, H), všechny tři zalisované do jednoho 16pinového konektoru IDC („16P“) k původní desce. Pro Octopus Pro je potřeba IDC konektor nahradit samostatnými 4pinovými konektory na každý motor (nebo redukcí). Které žíly plochého kabelu tvoří páry cívek, ověřit multimetrem (7,5 Ω); předpoklad žíly 1–2 a 3–4 – neověřeno.
 - Motory pohonu hlavy – ražba přečtená z fotek uživatele (2026-11-13), číslice s malou nejistotou; který z nich je H a který V, neurčeno:
   - 1. fotka: „MOONS' STEPPING MOTOR / TYPE 17HD6445-10N / 6035220 14.05.18“
   - 2. fotka: „MOONS' STEPPING MOTOR / TYPE 17HD6446-02N / 6008220 14/06/18“
