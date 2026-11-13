@@ -19,7 +19,7 @@
 
 ## Přiřazení driverů (rozhodnuto 2026-11-03)
 
-- Motor A a B pohonu hlavy (H-bot, v Klipperu `stepper_x` a `stepper_y` kinematiky `corexy`) a motor osy Z: po jednom TMC5160T (osa Z má jeden motor – zdroj: uživatel, stroj).
+- Motor H a V pohonu hlavy (H-bot, v Klipperu `stepper_x` = H a `stepper_y` = V kinematiky `corexy`) a motor osy Z: po jednom TMC5160T (osa Z má jeden motor – zdroj: uživatel, stroj).
 - 4. TMC5160T: rezerva.
 - Extruder: driver na EBB36.
 - Konkrétní sloty na Octopus Pro určit při zapojení.
@@ -40,9 +40,10 @@
 
 - Osa Z: jeden krokový motor (zdroj: uživatel, stroj).
 - Kinematika pohybu hlavy: H-bot – oba motory pohonu hlavy (vzadu po stranách) pohánějí jeden společný řemen spojený s vozíkem (zdroj: uživatel, 2026-11-13). Klipper H-bot obsluhuje kinematikou `corexy` (zdroj: `~/klipper/config/example-corexy.cfg` a `docs/Config_Reference.md` na Pi, Klipper v0.13.0-816).
-- Motory pohonu hlavy (A, B) – ražba přečtená z fotek uživatele (2026-11-13), číslice s malou nejistotou:
-  - motor A: „MOONS' STEPPING MOTOR / TYPE 17HD6445-10N / 6035220 14.05.18“
-  - motor B: „MOONS' STEPPING MOTOR / TYPE 17HD6446-02N / 6008220 14/06/18“
+- Označení motorů na stroji: H a V (pohon hlavy), Z (zdroj: uživatel, 2026-11-13).
+- Motory pohonu hlavy – ražba přečtená z fotek uživatele (2026-11-13), číslice s malou nejistotou; který z nich je H a který V, neurčeno:
+  - 1. fotka: „MOONS' STEPPING MOTOR / TYPE 17HD6445-10N / 6035220 14.05.18“
+  - 2. fotka: „MOONS' STEPPING MOTOR / TYPE 17HD6446-02N / 6008220 14/06/18“
   - Oba typy v katalozích Moons' chybí (zakázkové varianty). Řada 17HD6 je dvoustupňová (rotor 82 g·cm², délka kolem 48 mm); katalogový sourozenec 17HD6017N: odpor 7,5 Ω, indukčnost 14 mH, jmenovitý proud 0,8 A, přídržný moment 0,49 Nm (zdroj: [katalog Moons' hybrid steppers](https://cdn.shopify.com/s/files/1/0180/7671/files/Moons-hybrid-steppermotors.pdf), tabulka 17HD6) – shoda s naměřenými 7,5 Ω. Pracovní předpoklad: jmenovitý proud kolem 0,8 A (neověřeno).
   - Dříve uvedený MS17HD2P4100-05 (1 A, 3,9 Ω) pochází z internetu, ne ze stroje – pro tuto Z18 neplatí.
 - Krokový motor Z: štítek nepřístupný; předpoklad stejné řady 17HD6 jako motory pohonu hlavy, protože má stejný odpor cívky 7,5 Ω (zdroj: uživatel, 2026-11-13; typ neověřen). Strop proudu proto také 0,8 A.
