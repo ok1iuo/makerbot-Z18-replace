@@ -63,4 +63,5 @@ Po testu `M84` (vypnutí motorů) a rukou zkontrolovat teplotu motorů – tepl�
   - Při 1500 mm/s² vozík na 250 mm/s potřebuje 21 mm na rozjezd i brzdění – na úseku 50 mm horní mez testu.
   - Zrychlení při 250 mm/s: 3000, 5000, 7000 mm/s² – Klipper bez chyb, vozík vždy na značce, bez neobvyklých zvuků.
   - Rychlost při 7000 mm/s²: 300, 400, 500 mm/s – Klipper bez chyb, vozík vždy na značce, bez neobvyklých zvuků. Při 500 mm/s vozík potřebuje ~18 mm na rozjezd i brzdění, na úseku 50 mm blízko horní meze testu. Hranice ztráty kroků nenalezena.
-  - Hmotnost vozíku při testu = současný stav stroje; s novou hlavou (H2 V2S + EBB36) a pro kvalitu tisku limity znovu ověřit (input shaper).
+  - Osmička (oba motory naráz, plynulé změny směru): dvě kružnice r = 25 mm dotýkající se ve značce (X ±50 mm, Y ±25 mm), každá z 72 úseček po 5°, 10 průchodů, limity 500 mm/s a 7000 mm/s². Klipper bez chyb, vozík na značce, bez neobvyklých zvuků. Trvání ~25 s (časové značky Moonrakeru) na ~3,1 m dráhy → průměr ~130 mm/s; Klipper na krátkých úsečkách rychlost omezil víc než odhad z odstředivého zrychlení (~420 mm/s), příčina neověřena.
+  - Vozík při testech bez tiskové hlavy (jen původní držák, fotka uživatele 2026-11-14) – výrazně lehčí než s H2 V2S + EBB36. Limity s novou hlavou a pro kvalitu tisku znovu ověřit (input shaper).
