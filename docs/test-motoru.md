@@ -51,3 +51,5 @@ Po testu `M84` (vypnutí motorů) a rukou zkontrolovat teplotu motorů – tepl�
   - V (`stepper_y`) +50: vozík šikmo doprava a dopředu (+X, −Y).
   - Odpovídá kinematice `corexy` (x = (a + b) / 2, y = (a − b) / 2) – H-bot potvrzený, směry obou motorů správné, `dir_pin` beze změny.
 - `rotation_distance` X/Y: s hodnotou 40 vozík při `SET_KINEMATIC_POSITION` a `G1 X100` (oba motory naráz) jel čistě doprava o ~87 mm (měřeno pravítkem, nepřesně) → 40 × 87 / 100 ≈ 34,8. Ověřit počtem zubů řemenice × rozteč řemenu (GT2 17 z. = 34,0; MXL 17 z. = 34,54; GT2 18 z. = 36,0).
+- Přeměřeno delší dráhou s `rotation_distance` 34,8: `G1 X200` → vozík ~208 mm doprava, `G1 Y200` (2×) → druhé měření ~207 mm dozadu; pohyb čistě v jedné ose. → 34,8 × 207,5 / 200 ≈ 36,1, nejblíže GT2 18 zubů = 36,0 (posuv by byl 206,9 mm). Nastaveno 36; první měření na 100 mm (87 mm) považováno za nepřesné. Počet zubů neověřen.
+- Kontrola s `rotation_distance` 36: `G1 X200` → 200 mm, `G1 Y200` → 200 mm (pravítko, uživatel, 2026-11-14).

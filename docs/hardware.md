@@ -50,6 +50,7 @@
   - 2. fotka: „MOONS' STEPPING MOTOR / TYPE 17HD6446-02N / 6008220 14/06/18“
   - Oba typy v katalozích Moons' chybí (zakázkové varianty). Řada 17HD6 je dvoustupňová (rotor 82 g·cm², délka kolem 48 mm); katalogový sourozenec 17HD6017N: odpor 7,5 Ω, indukčnost 14 mH, jmenovitý proud 0,8 A, přídržný moment 0,49 Nm (zdroj: [katalog Moons' hybrid steppers](https://cdn.shopify.com/s/files/1/0180/7671/files/Moons-hybrid-steppermotors.pdf), tabulka 17HD6) – shoda s naměřenými 7,5 Ω. Pracovní předpoklad: jmenovitý proud kolem 0,8 A (neověřeno).
   - Dříve uvedený MS17HD2P4100-05 (1 A, 3,9 Ω) pochází z internetu, ne ze stroje – pro tuto Z18 neplatí.
+- Řemenice motorů pohonu hlavy: vnější průměr ~10 mm (měřeno uživatelem s přesností ~1 mm, řemen nesundaný, 2026-11-14) – odpovídá malé řemenici 16–18 zubů; počet zubů a typ řemenu neověřeno. Posuv naměřený na dráze 200 mm dává `rotation_distance` ≈ 36,1, nejblíže GT2 18 zubů (36,0; vnější průměr ~10,9 mm) – viz [test-motoru.md](test-motoru.md).
 - Krokový motor Z: štítek nepřístupný; předpoklad stejné řady 17HD6 jako motory pohonu hlavy, protože má stejný odpor cívky 7,5 Ω (zdroj: uživatel, 2026-11-13; typ neověřen). Strop proudu proto také 0,8 A.
 - Odpor cívky 7,5 Ω u obou cívek všech tří motorů (měřeno multimetrem na každé dvojici vodičů, uživatel, 2026-11-11). Testovací `run_current` 0,35 A; strop 0,8 A podle katalogového sourozence.
 - Z teardown guide MakerBotu (2016, [alloys.com.au](https://www.alloys.com.au/documents/Z18%20Teardown%20Guide.pdf); lokální kopie `docs/zdroje/Z18-Teardown-Guide.pdf`):
