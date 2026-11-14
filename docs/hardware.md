@@ -15,7 +15,7 @@
 
 - Nový zdroj 24 V / 500 W, ne původní ze Z18 (zdroj: uživatel; výrobce a model – doplnit). Proud 500 W / 24 V ≈ 20,8 A.
 - Polaritu a napětí výstupu před prvním připojením k Octopus Pro změřit multimetrem.
-- Raspberry Pi napájené ze stejného zdroje přes měnič 24 V → 5 V na piny GPIO (zdroj: fotka uživatele, 2026-11-14; typ měniče a nastavené napětí doplnit). Vypnutí zdroje vypne i Pi – předtím `sudo systemctl poweroff`.
+- Raspberry Pi napájené ze stejného zdroje přes měnič 24 V → 5 V na piny GPIO (zdroj: fotka uživatele, 2026-11-14; výstup 5,1 V, přes 2 A podle uživatele; typ měniče neověřen). Vypnutí zdroje vypne i Pi – předtím `sudo systemctl poweroff`.
 - Původní elektronika Z18 byla napájená 12 V (zdroj: uživatel, 2026-11-11). Původní 12V spotřebiče (ventilátory, topení komory, případně další) nesmí na 24 V – u každého před připojením ověřit napětí.
 
 ## Přiřazení driverů (rozhodnuto 2026-11-03)

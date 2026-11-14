@@ -42,7 +42,7 @@ Nainstalováno a běží (ověřeno `systemctl is-active` a dotazem na API Moonr
 - USB nabíječka 60 W, měřeno `vcgencmd get_throttled` a `journalctl -k`: podpětí krátce při startu (`0x50000`); při 60 s plné zátěže 4 jader na 1,4 GHz trvalé podpětí (`0x50005`) a pokles CPU na 600 MHz.
 - S procesorem omezeným na 600 MHz (`scaling_max_freq`, platí jen do restartu) instalace doběhla bez pádu a bez nového podpětí (`~/throttle.log`, 872 vzorků po 1 s, vše `0x50000`).
 - Doporučení: originální zdroj Raspberry Pi 5,1 V / 2,5 A, nebo ve finále měnič 24 V → 5 V ze zdroje tiskárny.
-- Od 2026-11-14 napájené měničem 24 V → 5 V ze zdroje tiskárny přes piny GPIO (zdroj: fotka uživatele; typ měniče a výstupní napětí doplnit). Napájení přes GPIO obchází vratnou pojistku Pi. `vcgencmd get_throttled` = `0x0` při čtyřech startech bez zátěže (2026-11-14, měřeno přes SSH); zátěžový test zatím neproběhl.
+- Od 2026-11-14 napájené měničem 24 V → 5 V ze zdroje tiskárny přes piny GPIO (zdroj: fotka uživatele; výstup 5,1 V, proud přes 2 A podle uživatele, 2026-11-14; typ měniče neověřen). Napájení přes GPIO obchází vratnou pojistku Pi. `vcgencmd get_throttled` = `0x0` při čtyřech startech bez zátěže (2026-11-14, měřeno přes SSH); zátěžový test zatím neproběhl.
 
 ## Firmware pro Octopus Pro (přeloženo 2026-11-11)
 
