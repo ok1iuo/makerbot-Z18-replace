@@ -53,3 +53,14 @@ Po testu `M84` (vypnutí motorů) a rukou zkontrolovat teplotu motorů – tepl�
 - `rotation_distance` X/Y: s hodnotou 40 vozík při `SET_KINEMATIC_POSITION` a `G1 X100` (oba motory naráz) jel čistě doprava o ~87 mm (měřeno pravítkem, nepřesně) → 40 × 87 / 100 ≈ 34,8. Ověřit počtem zubů řemenice × rozteč řemenu (GT2 17 z. = 34,0; MXL 17 z. = 34,54; GT2 18 z. = 36,0).
 - Přeměřeno delší dráhou s `rotation_distance` 34,8: `G1 X200` → vozík ~208 mm doprava, `G1 Y200` (2×) → druhé měření ~207 mm dozadu; pohyb čistě v jedné ose. → 34,8 × 207,5 / 200 ≈ 36,1, nejblíže GT2 18 zubů = 36,0 (posuv by byl 206,9 mm). Nastaveno 36; první měření na 100 mm (87 mm) považováno za nepřesné. Počet zubů neověřen.
 - Kontrola s `rotation_distance` 36: `G1 X200` → 200 mm, `G1 Y200` → 200 mm (pravítko, uživatel, 2026-11-14).
+- Teplota: H a V 5 min pod proudem 0,35 A v klidu (`SET_STEPPER_ENABLE`, `ihold` = `irun` = 28). `DRV_STATUS` bez `otpw`/`ot`, `GSTAT` 0. Dotykem (uživatel): motory studené, chladiče driverů nanejvýš lehce vlažné.
+- Zátěžový test s pohybem: vozík ručně uprostřed a označený, `SET_KINEMATIC_POSITION X=150 Y=150`, 5 min (34 cyklů) `G1` ±50 mm střídavě v X a Y rychlostí 50 mm/s; po každém testu `DUMP_TMC` a `M84`, vozík zkontrolován proti značce.
+  - 0,6 A: `GSTAT` 0, bez `otpw`/`ot`; vozík na značce (bez ztráty kroků); motory studené, drivery vlažné; bez neobvyklých zvuků.
+  - 0,8 A (`irun=31`): `GSTAT` 0, bez `otpw`/`ot`; vozík na značce; motory vlažné, odhadem ~29 °C (dotykem), drivery vlažné; bez neobvyklých zvuků.
+  - Pět minut na ustálení teploty motoru nestačí (tepelná setrvačnost motoru je řádově desítky minut) – teplotu při 0,8 A znovu zkontrolovat po delším provozu nebo prvním tisku.
+- Zkouška rychlosti při 0,8 A: limity zvednuté jen za běhu (`SET_VELOCITY_LIMIT`, po restartu Klipperu zpět na hodnoty z `printer.cfg`), zrychlení 1500 mm/s², vozík od značky uprostřed, 10 cyklů ±50 mm střídavě v X a Y pro každou rychlost, po každé rychlosti `M84` a kontrola značky.
+  - 50, 100, 150, 200, 250 mm/s: Klipper bez chyb, vozík vždy na značce (bez ztráty kroků), bez neobvyklých zvuků.
+  - Při 1500 mm/s² vozík na 250 mm/s potřebuje 21 mm na rozjezd i brzdění – na úseku 50 mm horní mez testu.
+  - Zrychlení při 250 mm/s: 3000, 5000, 7000 mm/s² – Klipper bez chyb, vozík vždy na značce, bez neobvyklých zvuků.
+  - Rychlost při 7000 mm/s²: 300, 400, 500 mm/s – Klipper bez chyb, vozík vždy na značce, bez neobvyklých zvuků. Při 500 mm/s vozík potřebuje ~18 mm na rozjezd i brzdění, na úseku 50 mm blízko horní meze testu. Hranice ztráty kroků nenalezena.
+  - Hmotnost vozíku při testu = současný stav stroje; s novou hlavou (H2 V2S + EBB36) a pro kvalitu tisku limity znovu ověřit (input shaper).
