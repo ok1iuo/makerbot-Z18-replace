@@ -65,3 +65,25 @@ Po testu `M84` (vypnutí motorů) a rukou zkontrolovat teplotu motorů – tepl�
   - Rychlost při 7000 mm/s²: 300, 400, 500 mm/s – Klipper bez chyb, vozík vždy na značce, bez neobvyklých zvuků. Při 500 mm/s vozík potřebuje ~18 mm na rozjezd i brzdění, na úseku 50 mm blízko horní meze testu. Hranice ztráty kroků nenalezena.
   - Osmička (oba motory naráz, plynulé změny směru): dvě kružnice r = 25 mm dotýkající se ve značce (X ±50 mm, Y ±25 mm), každá z 72 úseček po 5°, 10 průchodů, limity 500 mm/s a 7000 mm/s². Klipper bez chyb, vozík na značce, bez neobvyklých zvuků. Trvání ~25 s (časové značky Moonrakeru) na ~3,1 m dráhy → průměr ~130 mm/s; Klipper na krátkých úsečkách rychlost omezil víc než odhad z odstředivého zrychlení (~420 mm/s), příčina neověřena.
   - Vozík při testech bez tiskové hlavy (jen původní držák, fotka uživatele 2026-11-14) – výrazně lehčí než s H2 V2S + EBB36. Limity s novou hlavou a pro kvalitu tisku znovu ověřit (input shaper).
+
+### 2026-11-14 – najíždění bez koncových spínačů (sensorless homing)
+
+Z18 nemá koncové spínače a původně najížděla vpravo vzadu (zdroj: uživatel). Postup podle `~/klipper/docs/TMC_Drivers.md` (oddíl „Sensorless Homing“, Klipper v0.13.0-816).
+
+- Zapojení: propojky M0DIAG (→ `PG6`) a M1DIAG (→ `PG9`) na Octopus Pro (pinout `BIGTREETECH Octopus Pro V1.1-Pin.jpg`, manuál kap. 4.3; deska dodaná bez propojek, použité z volných slotů driverů). `diag1_pin: ^!PG6` / `^!PG9`, `endstop_pin: tmc5160_stepper_x/y:virtual_endstop`, `homing_retract_dist: 0`, `homing_speed: 18` (`rotation_distance` / 2).
+- Dráha změřená ručně (uživatel): X 308 mm, Y 325 mm. Najíždění v kladném směru (X doprava, Y dozadu), `position_endstop` = `position_max` = 305 / 322 – 3 mm odstup od protějšího dorazu.
+- Ladění při proudu 0,4 A (oba motory), start vozíku ~50 mm od dorazu. Pojistka: dočasně `position_min` 40 → 35 mm pod `position_endstop` – Klipper ujede nejvýš 1,5 × (`position_endstop` − `position_min`) (`klippy/kinematics/corexy.py`), pak hlásí „No trigger … after full movement“.
+
+| `sgt` | X | Y |
+|---|---|---|
+| 0–1 | falešný náraz po ~0,5 s | 1: falešný náraz po ~0,5 s (0 nezkoušeno) |
+| 2 | na doraz jedním dotykem | na doraz jedním dotykem |
+| 3 | 5× za sebou OK (3,13 s ±5 ms) | 5× za sebou OK (3,13 s ±2 ms) |
+| 4 | na doraz jedním dotykem | náraz nepozná |
+| 5, 6, 8, 16, 32 | náraz nepozná (X) | 5: náraz nepozná |
+
+- Výsledek podle vzorce Klipperu: X i Y `driver_SGT: 3`. Rozmezí (X 2–4, Y 2–3) je užší než doporučených 5 – po změně proudu, rychlosti najíždění nebo hmotnosti vozíku (nová hlava) ladit znovu; případně zkusit vyšší `homing_speed`.
+- Při nerozpoznaném nárazu řemen přeskakuje i při 0,4 A – motor se dál točí a driver zastavení nevidí; proto vyšší citlivost a krátká pojistka.
+- Incident: první pokus (0,8 A, `sgt` 63, pojistka jen skript na Pi) – skript nouzový stop neposlal (dotazy bez časového limitu), vozík narážel a řemen přeskakoval, uživatel vypnul zdroj. Mechanika bez poškození, Pi po tvrdém vypnutí v pořádku. Pojistky pro další testy: limit dráhy v Klipperu, nezávislý časovač s `emergency_stop`.
+- `[homing_override]`: proud 0,4 A, pauza 2 s, `G28 X`, odjezd 15 mm, pauza 2 s, `G28 Y`, odjezd 15 mm, návrat proudu (`run_current` z konfigurace). `G28 Z` ohlásí chybu (osa Z zatím bez najíždění).
+- Ověřeno s plnou dráhou: `G28 X Y` z ~50 mm od dorazů za 14,4 s a ze středu za 25,1 s; vždy jedním dotykem, bez přeskočení; konečná poloha X 290, Y 307; proud po najetí zpět `irun=31` (0,8 A).

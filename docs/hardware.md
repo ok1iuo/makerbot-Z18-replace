@@ -40,6 +40,8 @@
 ## Původní MakerBot Z18
 
 - Osa Z: jeden krokový motor (zdroj: uživatel, stroj).
+- Koncové spínače: žádné; původně najížděla bez spínačů, nulová poloha vpravo vzadu (zdroj: uživatel, 2026-11-14). Nově najíždění bez spínačů přes výstup DIAG driverů TMC5160 – viz [test-motoru.md](test-motoru.md).
+- Dráha pohonu hlavy změřená ručně (uživatel, 2026-11-14): X 308 mm, Y 325 mm.
 - Kinematika pohybu hlavy: H-bot – oba motory pohonu hlavy (vzadu po stranách) pohánějí jeden společný řemen spojený s vozíkem (zdroj: uživatel, 2026-11-13). Potvrzeno testem motorů 2026-11-14 – jeden motor pohne vozíkem šikmo, viz [test-motoru.md](test-motoru.md). Klipper H-bot obsluhuje kinematikou `corexy` (zdroj: `~/klipper/config/example-corexy.cfg` a `docs/Config_Reference.md` na Pi, Klipper v0.13.0-816).
 - Označení motorů na stroji: H a V (pohon hlavy), Z (zdroj: uživatel, 2026-11-13).
   - Umístění (fotka uživatele zezadu, 2026-11-13): motory H a V nahoře v zadních rozích; při pohledu zezadu V vlevo, H vpravo (zepředu tedy obráceně).
