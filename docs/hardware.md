@@ -4,7 +4,7 @@
 
 | Položka | Model | Stav | Poznámka |
 |---|---|---|---|
-| Řídicí deska | BTT Octopus Pro V1.1, MCU STM32H723 | objednáno 2026-10-17 | |
+| Řídicí deska | BTT Octopus Pro V1.1, MCU STM32H723 | dodáno, firmware Klipper nahraný 2026-11-14 | z výroby Marlin; MCU STM32H723ZX ověřeno podle USB popisu; `canbus_uuid` 479eb403415a |
 | Drivery krokových motorů | 2× TMC5160T PRO (k Octopus Pro) | objednáno 2026-10-17 | SPI |
 | Drivery krokových motorů | 2× TMC5160T PRO (k Octopus Pro) | objednáno 2026-11-03 | celkem 4× TMC5160T ve slotech Octopus Pro, přiřazení viz níže |
 | Hostitel Klipperu | Raspberry Pi 3 | k dispozici | |
@@ -15,6 +15,7 @@
 
 - Nový zdroj 24 V / 500 W, ne původní ze Z18 (zdroj: uživatel; výrobce a model – doplnit). Proud 500 W / 24 V ≈ 20,8 A.
 - Polaritu a napětí výstupu před prvním připojením k Octopus Pro změřit multimetrem.
+- Raspberry Pi napájené ze stejného zdroje přes měnič 24 V → 5 V na piny GPIO (zdroj: fotka uživatele, 2026-11-14; typ měniče a nastavené napětí doplnit). Vypnutí zdroje vypne i Pi – předtím `sudo systemctl poweroff`.
 - Původní elektronika Z18 byla napájená 12 V (zdroj: uživatel, 2026-11-11). Původní 12V spotřebiče (ventilátory, topení komory, případně další) nesmí na 24 V – u každého před připojením ověřit napětí.
 
 ## Přiřazení driverů (rozhodnuto 2026-11-03)
@@ -39,7 +40,7 @@
 ## Původní MakerBot Z18
 
 - Osa Z: jeden krokový motor (zdroj: uživatel, stroj).
-- Kinematika pohybu hlavy: H-bot – oba motory pohonu hlavy (vzadu po stranách) pohánějí jeden společný řemen spojený s vozíkem (zdroj: uživatel, 2026-11-13). Klipper H-bot obsluhuje kinematikou `corexy` (zdroj: `~/klipper/config/example-corexy.cfg` a `docs/Config_Reference.md` na Pi, Klipper v0.13.0-816).
+- Kinematika pohybu hlavy: H-bot – oba motory pohonu hlavy (vzadu po stranách) pohánějí jeden společný řemen spojený s vozíkem (zdroj: uživatel, 2026-11-13). Potvrzeno testem motorů 2026-11-14 – jeden motor pohne vozíkem šikmo, viz [test-motoru.md](test-motoru.md). Klipper H-bot obsluhuje kinematikou `corexy` (zdroj: `~/klipper/config/example-corexy.cfg` a `docs/Config_Reference.md` na Pi, Klipper v0.13.0-816).
 - Označení motorů na stroji: H a V (pohon hlavy), Z (zdroj: uživatel, 2026-11-13).
   - Umístění (fotka uživatele zezadu, 2026-11-13): motory H a V nahoře v zadních rozích; při pohledu zezadu V vlevo, H vpravo (zepředu tedy obráceně).
   - Pohon hlavy (fotka shora): dvě rovnoběžné lineární vedení po stranách, příčné vedení s vozíkem, řemen s kladkami ve čtyřech rozích.

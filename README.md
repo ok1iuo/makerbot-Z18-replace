@@ -12,4 +12,4 @@ Přestavba tiskárny MakerBot Replicator Z18 z původní elektroniky a firmwaru 
 
 ## Stav
 
-Příprava – sběr informací o původním hardwaru, čeká se na dodání elektroniky. Podrobnosti v [docs/hardware.md](docs/hardware.md).
+Octopus Pro dodaný, firmware Klipper nahraný a CAN na Pi nastavený; další krok je test motorů. Podrobnosti v [docs/hardware.md](docs/hardware.md).

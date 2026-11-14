@@ -1,6 +1,6 @@
 # Test krokových motorů
 
-Konfigurace: `klipper/printer.cfg` (fáze 1 – jen motory, bez topení a koncových spínačů, `run_current` 0,35 A). Předpoklad: firmware nahraný do Octopus Pro (viz [raspberry-pi.md](raspberry-pi.md)), rozhraní `can0` na Pi nastavené, `canbus_uuid` doplněné.
+Konfigurace: `klipper/printer.cfg` (fáze 1 – jen motory, bez topení a koncových spínačů, `run_current` 0,35 A). Firmware v Octopus Pro, rozhraní `can0` na Pi a `canbus_uuid` jsou hotové (2026-11-14, viz [raspberry-pi.md](raspberry-pi.md)).
 
 ## Bezpečnost
 
@@ -34,4 +34,20 @@ Po testu `M84` (vypnutí motorů) a rukou zkontrolovat teplotu motorů – tepl�
 
 ## Výsledky
 
-Doplnit po testu (datum, motor, projev, úpravy).
+### 2026-11-14 – drivery bez motorů
+
+- Osazené jen 2× TMC5160T: Driver0 (H, `stepper_x`), Driver1 (V, `stepper_y`); `[tmc5160 stepper_z]` v `printer.cfg` zakomentovaný do osazení Driver2.
+- Propojky podle manuálu BTT (`BTT_Octopus_pro_EN.pdf`, kap. 3.3 a 4.1) a pinoutu `BIGTREETECH Octopus Pro V1.1-Pin.jpg`: SPI – 4 propojky mezi řadou pinů MCU (u driveru) a řadou pinů driveru, řada SLP/5V volná; napětí motorů – propojka na VM–V_FUSED (napětí desky 24 V), pin HV u svorkovnice MOTOR_POWER volný. Zkontrolováno z fotek, SPI propojky po opravě jen podle uživatele (pod driverem nejdou vyfotit).
+- Konfigurace nasazená na Pi (původní ukázková zazálohovaná jako `~/printer_data/config/printer.cfg.kiauh-example`), Klipper „ready“.
+- `DUMP_TMC` u obou: `IOIN version=0x30` (TMC5160), `GLOBALSCALER=32`, `irun=28`, `mres=4` (16 mikrokroků). `GSTAT` po zapnutí `reset=1 uv_cp=1`; po smazání (`SET_TMC_FIELD ... FIELD=reset/uv_cp VALUE=1`) znovu přečteno `00000000`.
+- Statistiky Klipperu: `canstat_mcu bus_state=passive`, rostoucí `tx_error` – na sběrnici CAN chybí druhý uzel (viz [raspberry-pi.md](raspberry-pi.md)); USB bez opakovaných přenosů (`bytes_retransmit=0`).
+
+### 2026-11-14 – motory H a V
+
+- Motory připojené před zapnutím, vozík ručně uprostřed. Osy: při pohledu zepředu (dvířky) X zleva doprava, Y zepředu dozadu.
+- `STEPPER_BUZZ` u `stepper_x` (H) a `stepper_y` (V) bez chyby; `DRV_STATUS` po testu bez příznaků zkratu, přehřátí a přerušené cívky.
+- Test kinematiky (`[force_move]` povolený v testovací konfiguraci): druhý motor držený `SET_STEPPER_ENABLE`, `FORCE_MOVE ... DISTANCE=50 VELOCITY=10` tam a zpět.
+  - H (`stepper_x`) +50: vozík šikmo doprava a dozadu (+X, +Y).
+  - V (`stepper_y`) +50: vozík šikmo doprava a dopředu (+X, −Y).
+  - Odpovídá kinematice `corexy` (x = (a + b) / 2, y = (a − b) / 2) – H-bot potvrzený, směry obou motorů správné, `dir_pin` beze změny.
+- `rotation_distance` X/Y: s hodnotou 40 vozík při `SET_KINEMATIC_POSITION` a `G1 X100` (oba motory naráz) jel čistě doprava o ~87 mm (měřeno pravítkem, nepřesně) → 40 × 87 / 100 ≈ 34,8. Ověřit počtem zubů řemenice × rozteč řemenu (GT2 17 z. = 34,0; MXL 17 z. = 34,54; GT2 18 z. = 36,0).
