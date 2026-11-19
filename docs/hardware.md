@@ -57,7 +57,7 @@
 - Odpor cívky 7,5 Ω u obou cívek všech tří motorů (měřeno multimetrem na každé dvojici vodičů, uživatel, 2026-11-11). Testovací `run_current` 0,35 A; strop 0,8 A podle katalogového sourozence.
 - Z teardown guide MakerBotu (2016, [alloys.com.au](https://www.alloys.com.au/documents/Z18%20Teardown%20Guide.pdf); lokální kopie `docs/zdroje/Z18-Teardown-Guide.pdf`):
   - Pohon hlavy: dva „Gantry Motors“ vzadu po stranách gantry; kabel k vozíku plochým kabelem (FFC) přes Rikers PCB (horní část zadního pravého sloupku).
-  - Z: motor v zásuvkové části dole („Drawer Bay“), pohání řemenem („Z-Stage Belt“) závitové tyče stolu – `rotation_distance` osy Z tedy závisí na převodu řemenu i stoupání tyčí.
+  - Z: motor v zásuvkové části dole („Drawer Bay“), pohání řemenem („Z-Stage Belt“) závitové tyče stolu – `rotation_distance` osy Z tedy závisí na převodu řemenu i stoupání tyčí. Změřeno 1,2 mm na otáčku motoru (2026-11-19, viz [test-motoru.md](test-motoru.md)); počet zubů řemenic a stoupání tyčí neověřeno.
   - Vyhřívaná komora: dvě topné spirály („Heating Coil Assembly“) vzadu, termistor spirály, ventilátor topení („Heater Fan“) na Gowanus PCB; okolní termistor („Ambient Thermistor“) na gantry.
   - Desky: Brooklyn PCB (hlavní, 20pinové napájení ze zdroje), Gowanus PCB (zadní elektronika), Rikers PCB, Red Hook PCB (přední levý sloupek, spínač dveří – „Interlock Door Cable“).
   - Zdroj v zásuvkové části, zezadu 4 bezpečnostní šrouby Torx T10.

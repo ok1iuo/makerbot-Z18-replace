@@ -91,5 +91,21 @@ Z18 nemá koncové spínače a původně najížděla vpravo vzadu (zdroj: uživ
 ## Výsledek 2026-11-19 – driver osy Z
 
 - TMC5160T osazený v Driver2, `[tmc5160 stepper_z]` zapnutý (`cs_pin` PC6, `run_current` 0,35 A). Klipper `ready`.
-- `DUMP_TMC STEPPER=stepper_z`: `IOIN version=0x30` (driver odpovídá), `GSTAT reset=1 uv_cp=1` – příznaky ze startu napájení, ověřit, že po prvním zapnutí motoru zmizí.
-- Motor Z zatím netestován.
+- `DUMP_TMC STEPPER=stepper_z`: `IOIN version=0x30` (driver odpovídá), `GSTAT reset=1 uv_cp=1` – příznaky ze startu napájení; po prvním pohybu motoru `GSTAT 00000000`.
+
+## Výsledek 2026-11-19 – motor Z
+
+- Disk z podložky sundaný, podložka uprostřed výšky, `run_current` 0,35 A, `FORCE_MOVE` rychlostí 2 mm/s (skutečnou). Poloha podložky měřená uživatelem měřidlem shora (rozsah do 150 mm, čtení na setiny s nejistotou desetin).
+- Směr: `FORCE_MOVE` +10 mm zvedl podložku (~2 mm) – Klipper má u pohyblivé podložky +Z směrem od trysky, proto `dir_pin: !PG3`.
+- `rotation_distance` (původní zástupná hodnota 8):
+
+| Pohyb | Zadáno | Měřidlo | Ujeto | Vychází `rotation_distance` |
+|---|---|---|---|---|
+| dolů | −250 mm při 8 (před otočením směru) | 61,51 → 99,2 | 37,69 mm | 1,206 |
+| dolů | +30 mm při 1,206 | 99,2 → 128,91 | 29,71 mm | 1,194 |
+| nahoru (vymezení vůle) | −5 mm při 1,2 | 128,91 → 123,82 | 5,09 mm | – |
+| nahoru (ověření) | −50 mm při 1,2 | 123,82 → 73,91 | 49,91 mm | 1,198 |
+
+- Nastaveno `rotation_distance: 1.2` (průměr prvních dvou měření); ověření na 50 mm s odchylkou 0,2 % – v přesnosti měřidla. Vůle při změně směru se neprojevila.
+- Mechanický původ neověřen: 1,2 by odpovídalo např. závitovým tyčím se stoupáním 2 mm a převodu řemenu 3 : 5 – spočítat zuby řemenic a stoupání, až bude spodek přístupný.
+- Nic neobvyklého neslyšet (uživatel). Najíždění osy Z zatím chybí (plán: BLTouch), `position_max` zůstává zástupná.
