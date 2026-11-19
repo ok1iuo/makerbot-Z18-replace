@@ -109,3 +109,13 @@ Z18 nemá koncové spínače a původně najížděla vpravo vzadu (zdroj: uživ
 - Nastaveno `rotation_distance: 1.2` (průměr prvních dvou měření); ověření na 50 mm s odchylkou 0,2 % – v přesnosti měřidla. Vůle při změně směru se neprojevila.
 - Mechanický původ neověřen: 1,2 by odpovídalo např. závitovým tyčím se stoupáním 2 mm a převodu řemenu 3 : 5 – spočítat zuby řemenic a stoupání, až bude spodek přístupný.
 - Nic neobvyklého neslyšet (uživatel). Najíždění osy Z zatím chybí (plán: BLTouch), `position_max` zůstává zástupná.
+
+## Výsledek 2026-11-19 – periferie na EBB36 (bez topení)
+
+Testovací sekce v `printer.cfg`, piny z `~/klipper/config/sample-bigtreetech-ebb-canbus-v1.2.cfg` (Klipper v0.13.0-816).
+
+- BLTouch (`[bltouch]`, sensor `^EBB:PB8`, control `EBB:PB9`): LED modrá a červená svítí; `BLTOUCH_DEBUG COMMAND=self_test` – jehla se vysouvá a zasouvá; `QUERY_PROBE` → `open`. Ruční zatlačení jehly v `touch_mode` BLTouch pozná (jehlu zatáhne, červená LED), ale `QUERY_PROBE` krátký puls nezachytí. Signál ověřen příkazem `PROBE`: `SET_KINEMATIC_POSITION X=150 Y=150 Z=20`, `PROBE PROBE_SPEED=1`, uživatel zatlačil jehlu hned na začátku – podložka se zastavila na z = 19,04. Poté `M84` (zrušení falešné polohy os). Posunutí sondy vůči trysce zatím neznámé.
+- Ventilátor hotendu 24 V na FAN2 (`[fan_generic hotend_fan]`, `EBB:PA1`): `SET_FAN_SPEED FAN=hotend_fan SPEED=1` → točí se, `SPEED=0` → stojí.
+- Motor extruderu H2 V2S (`[manual_stepper extruder_test]`, TMC2209 na EBB36, UART `EBB:PA15`, 0,35 A): `DUMP_TMC STEPPER=extruder_test` – `IOIN version=0x21`, po pohybu `GSTAT 00000000`.
+  - Směr: s `dir_pin: !EBB:PD1` (jako v ukázkové konfiguraci) +5 mm vysunulo filament ven → `dir_pin: EBB:PD1`.
+  - `rotation_distance`: zástupná 22,68 (původní BIQU H2 s `gear_ratio` 50:10) posunula filament jen málo; podle produktové stránky H2 V2S nastaveno 3,433 → +5 mm vtáhlo filament ~5 mm (uživatel, odhad podle značky). Přesná kalibrace (100 mm) až s nahřátým hotendem.
