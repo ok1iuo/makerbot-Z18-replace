@@ -6,9 +6,9 @@
 |---|---|---|---|
 | Řídicí deska | BTT Octopus Pro V1.1, MCU STM32H723 | dodáno, firmware Klipper nahraný 2026-11-14 | z výroby Marlin; MCU STM32H723ZX ověřeno podle USB popisu; `canbus_uuid` 479eb403415a |
 | Drivery krokových motorů | 2× TMC5160T PRO (k Octopus Pro) | objednáno 2026-10-17 | SPI |
-| Drivery krokových motorů | 2× TMC5160T PRO (k Octopus Pro) | objednáno 2026-11-03 | celkem 4× TMC5160T ve slotech Octopus Pro, přiřazení viz níže |
+| Drivery krokových motorů | 2× TMC5160T PRO (k Octopus Pro) | osazeno 2026-11-19 | celkem 4× TMC5160T ve slotech Octopus Pro, přiřazení viz níže |
 | Hostitel Klipperu | Raspberry Pi 3 | k dispozici | |
-| Deska tiskové hlavy | BTT EBB36 CAN, varianta s MAX31865 | objednáno 2026-10-24 | revize desky doplnit po dodání; má vlastní driver extruderu |
+| Deska tiskové hlavy | BTT EBB36 CAN V1.2, varianta s MAX31865 | dodáno, Katapult + Klipper pro CAN nahrané 2026-11-19 | revize V1.2 podle potisku desky (uživatel); MCU STM32G0B1 ověřeno podle USB popisu; `canbus_uuid` b5a6d84ff699; má vlastní driver extruderu; připojená kabelem CAN k Octopusu (napájení 24 V tímto kabelem), propojky 120R na obou deskách |
 | Extruder + hotend | BIQU H2 V2S (do 270 °C) | objednáno 2026-10-24 | |
 
 ## Napájení
@@ -23,7 +23,7 @@
 - Motor H a V pohonu hlavy (H-bot, v Klipperu `stepper_x` = H a `stepper_y` = V kinematiky `corexy`) a motor osy Z: po jednom TMC5160T (osa Z má jeden motor – zdroj: uživatel, stroj).
 - 4. TMC5160T: rezerva.
 - Extruder: driver na EBB36.
-- Konkrétní sloty na Octopus Pro určit při zapojení.
+- Sloty na Octopus Pro: H = Driver0, V = Driver1 (2026-11-14), Z = Driver2, rezerva = Driver3 (osazeno 2026-11-19, uživatel). Driver Z odpovídá přes SPI (`DUMP_TMC`, `IOIN version=0x30`).
 
 ## Plán podložky (rozhodnuto 2026-11-03)
 

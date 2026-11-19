@@ -90,11 +90,34 @@ Pravidlo se uplatní při každém připojení desky, tedy i po `FIRMWARE_RESTAR
 
 UUID Octopus Pro: `479eb403415a` (`~/klippy-env/bin/python ~/klipper/scripts/canbus_query.py can0`).
 
-Dokumentace Klipperu upozorňuje, že režim USB to CAN bridge bez funkční sběrnice (zakončovací odpory 120 Ω a aspoň jeden další uzel) může způsobovat občasné chyby i při komunikaci se samotnou deskou – do připojení EBB36 s tím počítat.
+Dokumentace Klipperu upozorňuje, že režim USB to CAN bridge bez funkční sběrnice (zakončovací odpory 120 Ω a aspoň jeden další uzel) může způsobovat občasné chyby i při komunikaci se samotnou deskou. Od 2026-11-19 je na sběrnici EBB36 (UUID `b5a6d84ff699`) a propojky 120R jsou na obou deskách.
+
+## Firmware pro EBB36 V1.2 (nahráno 2026-11-18/19)
+
+Deska přišla s továrním firmwarem Klipper v režimu USB (`1d50:614e`, `stm32g0b1xx`, ověřeno `lsusb`). Nahraný je zavaděč Katapult a za ním Klipper pro CAN – další aktualizace Klipperu pak jdou po CAN bez USB a tlačítek na hlavě.
+
+Volby (zdroj: hlavička `~/klipper/config/sample-bigtreetech-ebb-canbus-v1.2.cfg`, volby Katapultu podle `src/stm32/Kconfig` v repu Katapult):
+
+- Katapult (`~/katapult`, Arksine/katapult v0.0.1-115-g3b973a4): STM32G0B1, „Build Katapult deployment application: Do not build“, 8 MHz crystal, CAN bus (on PB0/PB1), 1000000, podpora dvojitého resetu. Konfigurace `klipper/firmware/ebb36-v1.2-katapult.config`. `out/katapult.bin` 4 288 B, SHA-256 `e41f3fc6fdb65995cf72c4b0f17657c924cbc3d9fe2975cb9ecd62d50e2a5c2c`.
+- Klipper v0.13.0-816-gee2c6fb6: STM32G0B1, 8KiB bootloader, 8 MHz crystal, CAN bus (on PB0/PB1), 1000000. Konfigurace `klipper/firmware/ebb36-v1.2.config`. Na Pi se překládá odděleně od Octopusu, aby se nepřepsala jeho `.config` a `out/`:
+  ```
+  cd ~/klipper
+  make KCONFIG_CONFIG=$PWD/config.ebb36 OUT=out_ebb36/ olddefconfig
+  make KCONFIG_CONFIG=$PWD/config.ebb36 OUT=out_ebb36/ -j4
+  ```
+  `out_ebb36/klipper.bin` 47 168 B, SHA-256 `821071aa02800cb5f37f321c00319dfea72c694fabd5b62605c91824529e161b`.
+
+Postup, jak skutečně proběhl:
+
+1. EBB36 přes USB-C k Pi; BOOT podržet, RESET, BOOT pustit → `0483:df11`.
+2. `sudo dfu-util -a 0 -d 0483:df11 -s 0x08000000:leave -D ~/katapult/out/katapult.bin` (stejná neškodná chyba `get_status` na konci jako u Octopusu).
+3. Kabel CAN k Octopusu, propojky 120R na obou deskách, USB odpojit, propojka VUSB dole.
+4. Katapult se na CAN neozval (`flashtool.py -i can0 -q`) ani po dvojitém resetu a deska se neohlásila ani přes USB – zbytek továrního firmwaru za Katapultem nefungoval. Klipper proto nahrán také přes DFU, rovnou za Katapult: `sudo dfu-util -a 0 -d 0483:df11 -s 0x08002000:leave -D ~/klipper/out_ebb36/klipper.bin`.
+5. Na CAN se deska ohlásila až po opravě zapojení CAN-H/CAN-L a zakončovacího odporu (uživatel, 2026-11-19): `canbus_query.py can0` i `flashtool.py -i can0 -q` → `b5a6d84ff699, Application: Klipper`.
+
+Další aktualizace Klipperu na EBB36 (po CAN, podle README Katapultu – zatím nevyzkoušeno): `sudo service klipper stop`, pak `~/klippy-env/bin/python ~/katapult/scripts/flashtool.py -i can0 -u b5a6d84ff699 -f ~/klipper/out_ebb36/klipper.bin`.
 
 ## Další kroky
 
 1. Zátěžový test napájení z měniče (viz výše).
-2. Test motorů s `klipper/printer.cfg` (firmware nahraný, `can0` nastavené).
-3. EBB36: firmware Klipperu pro CAN, napojení na `can0`.
-4. `printer.cfg` pro Z18 (v repu `klipper/`).
+2. `printer.cfg` pro Z18 (v repu `klipper/`).

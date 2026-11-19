@@ -87,3 +87,9 @@ Z18 nemá koncové spínače a původně najížděla vpravo vzadu (zdroj: uživ
 - Incident: první pokus (0,8 A, `sgt` 63, pojistka jen skript na Pi) – skript nouzový stop neposlal (dotazy bez časového limitu), vozík narážel a řemen přeskakoval, uživatel vypnul zdroj. Mechanika bez poškození, Pi po tvrdém vypnutí v pořádku. Pojistky pro další testy: limit dráhy v Klipperu, nezávislý časovač s `emergency_stop`.
 - `[homing_override]`: proud 0,4 A, pauza 2 s, `G28 X`, odjezd 15 mm, pauza 2 s, `G28 Y`, odjezd 15 mm, návrat proudu (`run_current` z konfigurace). `G28 Z` ohlásí chybu (osa Z zatím bez najíždění).
 - Ověřeno s plnou dráhou: `G28 X Y` z ~50 mm od dorazů za 14,4 s a ze středu za 25,1 s; vždy jedním dotykem, bez přeskočení; konečná poloha X 290, Y 307; proud po najetí zpět `irun=31` (0,8 A).
+
+## Výsledek 2026-11-19 – driver osy Z
+
+- TMC5160T osazený v Driver2, `[tmc5160 stepper_z]` zapnutý (`cs_pin` PC6, `run_current` 0,35 A). Klipper `ready`.
+- `DUMP_TMC STEPPER=stepper_z`: `IOIN version=0x30` (driver odpovídá), `GSTAT reset=1 uv_cp=1` – příznaky ze startu napájení, ověřit, že po prvním zapnutí motoru zmizí.
+- Motor Z zatím netestován.
