@@ -126,3 +126,10 @@ Testovací sekce v `printer.cfg`, piny z `~/klipper/config/sample-bigtreetech-eb
 - Čtení teploty (`Generic 3950`, `EBB:PA3`, schváleno uživatelem): nejdřív −109 až −88 °C – konektor termistoru nebyl dosednutý; po dozapojení 24,0 °C stabilně.
 - Test topení (`[heater_generic hotend_test]`, `EBB:PB13`, `control: watermark`, `max_temp` 80, `verify_heater` výchozí – schváleno uživatelem): cíl 40 °C, plný výkon; termistor reaguje se zpožděním ~4 s, 40 °C dosaženo za ~15 s (23,8 → 41,1 °C), topení vypnuto. Teplota dál stoupala až na 67,9 °C (~25 s po vypnutí), pak chladla. Pojistka `max_temp` nezasáhla, ventilátor hotendu byl vypnutý.
 - Závěr: topení i čidlo fungují; překmit +27 °C při spínání → před tiskem `[extruder]` s PID (`PID_CALIBRATE`). Typ termistoru (β) dál neověřen – před vysokými teplotami ověřit (např. podle údajů BIQU nebo srovnáním s teploměrem).
+
+## Výsledek 2026-11-20 – extruder s PID
+
+- Testovací sekce nahrazeny plným `[extruder]` + `[heater_fan hotend_fan]` (schváleno uživatelem: `max_temp` 250, `min_temp` 0, `verify_heater` výchozí, `run_current` 0,6 A). Ventilátor hotendu se sám zapíná nad 50 °C – ověřeno (52,5 °C → `speed` 1,0).
+- `PID_CALIBRATE HEATER=extruder TARGET=200` (ventilátor hotendu běží, chlazení výtisku není): 6 min, nejvyšší teplota při kmitání 217,7 °C; výsledek `pid_Kp=10.089 pid_Ki=0.345 pid_Kd=73.777`, zapsán přímo do `printer.cfg` v repu (ne `SAVE_CONFIG`, aby se konfigurace na Pi nerozešla s repem). Hodnoty z výsledku `PID_CALIBRATE` ve výpisu Klipperu.
+- Ověření regulace (`M104 S200`): překmit na 207,0 °C (+7 °C), pak ustálení na 200,0 ± 0,1 °C i během vytlačování.
+- Kalibrace extruderu (PLA, 200 °C, `G1 E100 F60`, značka 120 mm nad vstupem): zbylo 19,2 mm → vytlačeno 100,8 mm (+0,8 %), v přesnosti značky (uživatel). `rotation_distance` ponechán 3,433 (hodnota BIQU); kdyby se odchylka potvrdila, vychází 3,46 – doladit průtokem při tisku.
