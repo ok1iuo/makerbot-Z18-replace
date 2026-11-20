@@ -173,4 +173,22 @@ Testovací sekce v `printer.cfg`, piny z `~/klipper/config/sample-bigtreetech-eb
 ## Výsledek 2026-11-20 – startovací makro a proud motorů
 
 - `PRINT_START EXTRUDER=200` a hned `PRINT_END` bez tisku (podložka volná, PLA): start 254 s (`G28`, mapa celé podložky, ohřev, čisticí čára), čisticí čára v pořádku (uživatel); konec – hlava X 290 Y 290, cíl teploty 0, motory vypnuté. Nastavení PrusaSliceru v [prusaslicer.md](prusaslicer.md).
+- `PRINT_END` sjede podložkou o 50 mm (max. Z 400) a zaparkuje X 290 Y 290; stejně parkuje zrušení tisku v Mainsailu (`_CLIENT_VARIABLE`: `park_at_cancel`, `custom_park_dz` 50 – platí i pro PAUSE). Ověřeno při zrušení tisku: X 290, Y 290, Z ~50.
 - Po testech najíždění, mapy a startovacího makra byly motory H, V a Z horké – ruka na nich vydrží jen chvíli (uživatel). H/V `run_current` 0,8 → 0,6 A (0,6 A prošlo pohybovými testy 2026-11-14); Z zůstává 0,35 A (motor v zásuvkové části, uživatel na něj nedosáhne a považuje ho za v pořádku). Najíždění X/Y beze změny – jede na vlastních 0,4 A.
+
+## Výsledek 2026-11-20 – první pokusy o tisk (rozpracováno)
+
+Model: čtverec 50 × 50 mm uprostřed tiskové plochy (X 145–195, Y 130–180), PrusaSlicer 2.9.7, PLA 200 °C, vrstva 0,3 mm, 2 vrstvy (`test1`, `test2`; ~64 cm filamentu). Podložka: původní Z18 s fólií, nevyhřívaná.
+
+| Pokus | `z_offset` | První vrstva | Výsledek |
+|---|---|---|---|
+| `test` | 1,307 | – | zrušeno: `PRINT_START EXTRUDER=200hh` (překlep ve sliceru) → bez ohřevu, Klipper zablokoval vytlačování („Extrude below minimum temp“) |
+| `test1` | 1,307 | 30 mm/s | čisticí čára OK, obrys přilnul, první obvody čtverce se odtrhly → zrušeno |
+| `test2` | 1,207 | 15 mm/s | fólie očištěná IPA; čáry tenké a kulaté, jen položené – obvody se vláčely (foto uživatele) → zrušeno |
+| `test2` znovu | 1,407 | 15 mm/s | zrušeno uživatelem hned po čisticí čáře, výsledek zatím nepopsán |
+
+- Chyba směru: zmenšení `z_offset` (1,307 → 1,207) trysku při tisku **zvedne** (`z_offset` = výška trysky nad podložkou při sepnutí sondy). Přiblížení trysky = zvětšit `z_offset`; v Mainsailu (Z-Offset, babystepping) naopak záporný krok = blíž.
+- Nastaveno `z_offset: 1.407` (papírová zkouška 1,307 + 0,1 → tryska o 0,1 mm blíž).
+- Před filamentem: starý kus vytažen (`G1 E-15 F1800`, `G1 E-60 F600` při 200 °C), nový zaveden (`E50` + `E20`), přes 1 m.
+
+Další krok: pustit `test2` s `z_offset` 1,407, sledovat obrys a dolaďovat Z-Offset v Mainsailu po 0,05 mm; když PLA nedrží ani při správné výšce – lepidlo v tyčince nebo modrá malířská páska místo fólie.

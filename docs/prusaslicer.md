@@ -1,28 +1,31 @@
 # PrusaSlicer pro Z18 s Klipperem
 
-Nastavení vlastní tiskárny v PrusaSliceru (Linux, uživatel zvolil PrusaSlicer 2026-11-20). Makra `PRINT_START` a `PRINT_END` jsou v `klipper/printer.cfg`.
+Nastavení vlastní tiskárny v PrusaSliceru (Linux, uživatel zvolil PrusaSlicer 2026-11-20). Na stanici nainstalován PrusaSlicer 2.9.7 z Flathubu jen pro uživatele (`flatpak install --user flathub com.prusa3d.PrusaSlicer`, Debian 12 má v balíčcích jen 2.5.0), spuštění `flatpak run com.prusa3d.PrusaSlicer`. Makra `PRINT_START` a `PRINT_END` jsou v `klipper/printer.cfg`.
 
 ## Printer Settings
 
 - General → Firmware → G-code flavor: `Klipper`
 - General → Bed shape: 260 × 290 mm, počátek −40 / −10 – souřadnice sliceru pak odpovídají tiskové ploše X 40–300, Y 10–300 (viz [test-motoru.md](test-motoru.md), oddíl rozsah os a tisková plocha)
-- General → Max print height: 400 mm
-- Custom G-code → Start G-code:
+- General → Max print height: 400 mm (v profilu zatím 350 – opravit)
+- Custom G-code (česky Vlastní G-code; v režimu Expert) → Start G-code (Začátek G-code), přesně bez znaků navíc:
   ```
   PRINT_START EXTRUDER=[first_layer_temperature[initial_extruder]]
   ```
-- Custom G-code → End G-code:
+- Custom G-code → End G-code (Konec G-code – pod stránkou, nejsnáz přes vyhledávání „Konec G-code“):
   ```
   PRINT_END
   ```
+- Začátek G-code – možnosti → **Automaticky vysílat teplotní příkazy: vypnout** (jinak slicer ohřeje trysku na plnou teplotu ještě před `PRINT_START`).
 
 ## Print Settings
 
+- Vrstvy a perimetry → Výška první vrstvy: 0,3 mm
+- Rychlost → Rychlost první vrstvy: 15 mm/s (nevyhřívaná podložka)
 - Output options → Label objects: `Firmware-specific` – slicer zapíše `EXCLUDE_OBJECT_DEFINE`, `PRINT_START` pak měří mapu podložky jen pod objekty (`BED_MESH_CALIBRATE ADAPTIVE=1`) a v Mainsailu jde zrušit jednotlivý objekt.
 
 ## Co dělají makra
 
 - `PRINT_START`: tryska 150 °C (ještě neteče), `G28`, mapa podložky pod objekty (bez označených objektů celá), ohřev na teplotu ze sliceru, čisticí čára 100 mm vpředu na Y 8, Z 0,3.
-- `PRINT_END`: zatažení 2 mm, podložka o 10 mm dolů, hlava na X 290 Y 290, topení a ventilátor vypnout, smazat mapu, vypnout motory.
+- `PRINT_END`: zatažení 2 mm, podložka o 50 mm dolů (max. Z 400), hlava na X 290 Y 290, topení a ventilátor vypnout, smazat mapu, vypnout motory.
 
 Ventilátor chlazení výtisku zatím není zapojený; `[fan]` na FAN1 je definovaný jen proto, aby příkazy M106/M107 ze sliceru nezastavily tisk.
