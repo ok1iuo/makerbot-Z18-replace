@@ -150,3 +150,22 @@ Testovací sekce v `printer.cfg`, piny z `~/klipper/config/sample-bigtreetech-eb
 - Výška podložky sondou v rozích obrysu (vůči středu, `PROBE`): vlevo vpředu −0,10, vpravo vpředu +0,12, vpravo vzadu −0,19, vlevo vzadu −0,05 mm (jehla vpravo na X 265 kvůli `x_offset`). Rozdíl 0,30 mm – pro tisk mapa podložky.
 - Obrys PLA 200 °C, Z 0,3, 20 mm/s, X 40–300 × Y 10–300: čára v pořádku i v zadním rohu, od okrajů podložky ~5 mm (uživatel). Tisková plocha podle uživatele: **X 40–300, Y 10–300** (260 × 290 mm). Začátek čáry bez filamentu – po dřívějším zatažení 3 mm a vytečení při ohřevu nestačilo vrátit 3 mm; před tiskem čisticí čára ve startovacím makru.
 - První pokus o obrys zastaven před vytlačováním: hlava stála na levém dorazu na X 22,5 (dřív `position_min: 0`).
+- Motory po testech najíždění, sondování a obrysu ~40 °C (uživatel, odhad dotykem).
+
+## Výsledek 2026-11-20 – mapa podložky
+
+- `[bed_mesh]`: 5 × 5 bodů, souřadnice sondy X 40–262, Y 10–300 (tisková plocha; pruh X 262–300 Klipper dopočítá), přejezdy Z 5, 50 mm/s.
+- Pravý doraz: první mapa měla `mesh_max` X 265 → tryska na X 305 narazila do pravého dorazu. X 305 je poloha, kde hlava při najíždění bez spínačů narazí na doraz; Klipper nedovolí `position_max` pod `position_endstop` (`klippy/stepper.py`), proto tryska drží X ≤ 302 hlídáním v mapě a tiskové ploše (X do 300).
+- Tři měření (`BED_MESH_CALIBRATE`): zadní čtyři řady se shodují na ~0,02 mm. Přední řada ve 2. měření o 0,1–0,2 mm níž – mezi vozík a rám se zapletl filament a vozík nadzvedl (uživatel); 2. měření neplatné. 1. měření (na podložce ještě ležela čára obrysu) a 3. (bez ní) se shodují.
+- Platí 3. měření (mm, kladné = podložka výš):
+
+| Y \ X | 40 | 96 | 151 | 207 | 262 |
+|---|---|---|---|---|---|
+| 300 (vzadu) | +0,26 | +0,17 | +0,08 | −0,05 | −0,12 |
+| 228 | +0,16 | +0,06 | +0,03 | −0,10 | −0,07 |
+| 155 | +0,15 | +0,04 | +0,01 | −0,01 | +0,02 |
+| 83 | −0,02 | −0,03 | −0,04 | −0,06 | −0,05 |
+| 10 (vpředu) | −0,11 | +0,01 | +0,04 | +0,06 | +0,04 |
+
+- Rozdíl 0,38 mm, podložka nakloněná hlavně vzadu (vlevo výš než vpravo). Mapa se neukládá přes `SAVE_CONFIG` (zapsal by jen do souboru na Pi) – měřit na začátku tisku ve startovacím makru.
+- Poučení: vedení filamentu k hlavě tak, aby se nemohl zaplést mezi vozík a rám.
