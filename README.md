@@ -12,4 +12,4 @@ Přestavba tiskárny MakerBot Replicator Z18 z původní elektroniky a firmwaru 
 
 ## Stav
 
-Octopus Pro a EBB36 s firmwarem Klipper propojené po CAN; pohon hlavy (H/V) otestovaný včetně najíždění bez spínačů; motor osy Z otestovaný (směr, `rotation_distance` 1,2); na EBB36 extruder H2 V2S včetně topení s PID a kalibrace vytlačování; osa Z najíždí na BLTouch (`z_offset` změřený). Další kroky: rozměr podložky a `position_max` osy Z, mapa podložky, první tisk. Podrobnosti v [docs/hardware.md](docs/hardware.md).
+Octopus Pro a EBB36 s firmwarem Klipper propojené po CAN; pohon hlavy (H/V) otestovaný včetně najíždění bez spínačů; motor osy Z otestovaný (směr, `rotation_distance` 1,2); na EBB36 extruder H2 V2S včetně topení s PID a kalibrace vytlačování; osa Z najíždí na BLTouch (`z_offset` změřený). Tisková plocha X 40–300, Y 10–300, Z do 400 mm. Další kroky: mapa podložky, startovací makro s čisticí čárou, první tisk. Podrobnosti v [docs/hardware.md](docs/hardware.md).

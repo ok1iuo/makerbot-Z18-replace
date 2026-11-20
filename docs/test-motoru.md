@@ -142,3 +142,11 @@ Testovací sekce v `printer.cfg`, piny z `~/klipper/config/sample-bigtreetech-eb
 - První `G28` (uživatel u vypínače): 60,7 s, bez chyby; Klipper najíždí dvakrát (dotyk, odjezd 5 mm, pomalejší dotyk – výchozí `homing_retract_dist` a `second_homing_speed`), konec X 192,5 Y 161 Z 10.
 - `PROBE_ACCURACY` (10 dotyků, střed): rozsah 0,007 mm, směrodatná odchylka 0,002 mm (doporučení Klipperu < 0,025 mm).
 - `PROBE_CALIBRATE` s papírem, tryska očištěná a nahřátá na 200 °C (PLA): volno na −1,27, drhne na −1,32 → `z_offset: 1.307` (výpis Klipperu po `ACCEPT`), zapsán do `printer.cfg` v repu. Přesnost ~0,05 mm, doladit podle první vrstvy.
+
+## Výsledek 2026-11-20 – rozsah os a tisková plocha
+
+- Osa Z: `position_max: 400` podle uživatele (víc není potřeba); skutečný dolní konec dráhy neměřen.
+- Osa X: s hlavou H2 V2S a BLTouch je levý doraz na X ≈ 32 (po `G28` hlava na X 32,5 max. 0,5 mm od dorazu, uživatel) – dráha bez hlavy byla 308 mm, s hlavou ~273 mm. Nastaveno `position_min: 35` (3 mm rezerva jako vpravo). Najíždění vpravo beze změny.
+- Výška podložky sondou v rozích obrysu (vůči středu, `PROBE`): vlevo vpředu −0,10, vpravo vpředu +0,12, vpravo vzadu −0,19, vlevo vzadu −0,05 mm (jehla vpravo na X 265 kvůli `x_offset`). Rozdíl 0,30 mm – pro tisk mapa podložky.
+- Obrys PLA 200 °C, Z 0,3, 20 mm/s, X 40–300 × Y 10–300: čára v pořádku i v zadním rohu, od okrajů podložky ~5 mm (uživatel). Tisková plocha podle uživatele: **X 40–300, Y 10–300** (260 × 290 mm). Začátek čáry bez filamentu – po dřívějším zatažení 3 mm a vytečení při ohřevu nestačilo vrátit 3 mm; před tiskem čisticí čára ve startovacím makru.
+- První pokus o obrys zastaven před vytlačováním: hlava stála na levém dorazu na X 22,5 (dřív `position_min: 0`).
