@@ -169,3 +169,8 @@ Testovací sekce v `printer.cfg`, piny z `~/klipper/config/sample-bigtreetech-eb
 
 - Rozdíl 0,38 mm, podložka nakloněná hlavně vzadu (vlevo výš než vpravo). Mapa se neukládá přes `SAVE_CONFIG` (zapsal by jen do souboru na Pi) – měřit na začátku tisku ve startovacím makru.
 - Poučení: vedení filamentu k hlavě tak, aby se nemohl zaplést mezi vozík a rám.
+
+## Výsledek 2026-11-20 – startovací makro a proud motorů
+
+- `PRINT_START EXTRUDER=200` a hned `PRINT_END` bez tisku (podložka volná, PLA): start 254 s (`G28`, mapa celé podložky, ohřev, čisticí čára), čisticí čára v pořádku (uživatel); konec – hlava X 290 Y 290, cíl teploty 0, motory vypnuté. Nastavení PrusaSliceru v [prusaslicer.md](prusaslicer.md).
+- Po testech najíždění, mapy a startovacího makra byly motory H, V a Z horké – ruka na nich vydrží jen chvíli (uživatel). H/V `run_current` 0,8 → 0,6 A (0,6 A prošlo pohybovými testy 2026-11-14); Z zůstává 0,35 A (motor v zásuvkové části, uživatel na něj nedosáhne a považuje ho za v pořádku). Najíždění X/Y beze změny – jede na vlastních 0,4 A.
