@@ -133,3 +133,12 @@ Testovací sekce v `printer.cfg`, piny z `~/klipper/config/sample-bigtreetech-eb
 - `PID_CALIBRATE HEATER=extruder TARGET=200` (ventilátor hotendu běží, chlazení výtisku není): 6 min, nejvyšší teplota při kmitání 217,7 °C; výsledek `pid_Kp=10.089 pid_Ki=0.345 pid_Kd=73.777`, zapsán přímo do `printer.cfg` v repu (ne `SAVE_CONFIG`, aby se konfigurace na Pi nerozešla s repem). Hodnoty z výsledku `PID_CALIBRATE` ve výpisu Klipperu.
 - Ověření regulace (`M104 S200`): překmit na 207,0 °C (+7 °C), pak ustálení na 200,0 ± 0,1 °C i během vytlačování.
 - Kalibrace extruderu (PLA, 200 °C, `G1 E100 F60`, značka 120 mm nad vstupem): zbylo 19,2 mm → vytlačeno 100,8 mm (+0,8 %), v přesnosti značky (uživatel). `rotation_distance` ponechán 3,433 (hodnota BIQU); kdyby se odchylka potvrdila, vychází 3,46 – doladit průtokem při tisku.
+
+## Výsledek 2026-11-20 – najíždění osy Z na BLTouch
+
+- BLTouch pevně na hlavě: jehla 40 mm vlevo od trysky, v ose Y v jedné linii (uživatel, měřeno) → `x_offset: -40`, `y_offset: 0`.
+- `stepper_z`: `endstop_pin: probe:z_virtual_endstop`, `position_min: -5` (pro `PROBE_CALIBRATE`), `homing_speed: 5`; `position_max` 450 zůstává zástupná.
+- `[homing_override]`: po X a Y přejede tryska na X 192,5 Y 161 (jehla nad středem podložky X 152,5 Y 161), `G28 Z`, pak Z 10. Samotné `G28 Z` bez najetých X/Y skončí chybou.
+- První `G28` (uživatel u vypínače): 60,7 s, bez chyby; Klipper najíždí dvakrát (dotyk, odjezd 5 mm, pomalejší dotyk – výchozí `homing_retract_dist` a `second_homing_speed`), konec X 192,5 Y 161 Z 10.
+- `PROBE_ACCURACY` (10 dotyků, střed): rozsah 0,007 mm, směrodatná odchylka 0,002 mm (doporučení Klipperu < 0,025 mm).
+- `PROBE_CALIBRATE` s papírem, tryska očištěná a nahřátá na 200 °C (PLA): volno na −1,27, drhne na −1,32 → `z_offset: 1.307` (výpis Klipperu po `ACCEPT`), zapsán do `printer.cfg` v repu. Přesnost ~0,05 mm, doladit podle první vrstvy.

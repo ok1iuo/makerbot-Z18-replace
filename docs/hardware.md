@@ -10,7 +10,7 @@
 | Hostitel Klipperu | Raspberry Pi 3 | k dispozici | |
 | Deska tiskové hlavy | BTT EBB36 CAN V1.2, varianta s MAX31865 | dodáno, Katapult + Klipper pro CAN nahrané 2026-11-19 | revize V1.2 podle potisku desky (uživatel); MCU STM32G0B1 ověřeno podle USB popisu; `canbus_uuid` b5a6d84ff699; má vlastní driver extruderu; připojená kabelem CAN k Octopusu (napájení 24 V tímto kabelem), propojky 120R na obou deskách |
 | Extruder + hotend | BIQU H2 V2S (do 270 °C) | dodáno, motor otestovaný 2026-11-19 | podle [produktové stránky BIQU](https://biqu.equipment/products/biqu-h2-v2s-extruder-for-b1-bx-ender-3-3-v2-5-6-cr6-10): převod 7:1, obvod hnacího kolečka 24,5 mm, 932 kroků/mm při 16 mikrokrocích, Klipper `rotation_distance` 3,433, doporučený proud motoru 800 mA, topné tělísko 40 W / 24 V, termistor NTC100K, max. 270 °C; motor na driveru EBB36 |
-| Sonda osy Z | BLTouch | připojená k EBB36, otestovaná 2026-11-19 | výrobce a verze neověřeno; sensor PB8, control PB9 |
+| Sonda osy Z | BLTouch | připojená k EBB36, osa Z na ni najíždí od 2026-11-20 | výrobce a verze neověřeno; sensor PB8, control PB9; jehla 40 mm vlevo od trysky (uživatel); `z_offset` 1,307 mm |
 | Ventilátor hotendu | 24 V (uživatel) | připojený k EBB36 FAN2 (PA1), otestovaný 2026-11-19 | typ neověřen |
 
 ## Napájení
