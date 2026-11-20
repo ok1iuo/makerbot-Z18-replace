@@ -119,3 +119,10 @@ Testovací sekce v `printer.cfg`, piny z `~/klipper/config/sample-bigtreetech-eb
 - Motor extruderu H2 V2S (`[manual_stepper extruder_test]`, TMC2209 na EBB36, UART `EBB:PA15`, 0,35 A): `DUMP_TMC STEPPER=extruder_test` – `IOIN version=0x21`, po pohybu `GSTAT 00000000`.
   - Směr: s `dir_pin: !EBB:PD1` (jako v ukázkové konfiguraci) +5 mm vysunulo filament ven → `dir_pin: EBB:PD1`.
   - `rotation_distance`: zástupná 22,68 (původní BIQU H2 s `gear_ratio` 50:10) posunula filament jen málo; podle produktové stránky H2 V2S nastaveno 3,433 → +5 mm vtáhlo filament ~5 mm (uživatel, odhad podle značky). Přesná kalibrace (100 mm) až s nahřátým hotendem.
+
+## Výsledek 2026-11-20 – termistor a topení hotendu
+
+- Před zapnutím změřeno multimetrem (uživatel): topné tělísko 14 Ω (40 W / 24 V → 14,4 Ω), termistor 87 kΩ (Generic 3950 → ~28 °C).
+- Čtení teploty (`Generic 3950`, `EBB:PA3`, schváleno uživatelem): nejdřív −109 až −88 °C – konektor termistoru nebyl dosednutý; po dozapojení 24,0 °C stabilně.
+- Test topení (`[heater_generic hotend_test]`, `EBB:PB13`, `control: watermark`, `max_temp` 80, `verify_heater` výchozí – schváleno uživatelem): cíl 40 °C, plný výkon; termistor reaguje se zpožděním ~4 s, 40 °C dosaženo za ~15 s (23,8 → 41,1 °C), topení vypnuto. Teplota dál stoupala až na 67,9 °C (~25 s po vypnutí), pak chladla. Pojistka `max_temp` nezasáhla, ventilátor hotendu byl vypnutý.
+- Závěr: topení i čidlo fungují; překmit +27 °C při spínání → před tiskem `[extruder]` s PID (`PID_CALIBRATE`). Typ termistoru (β) dál neověřen – před vysokými teplotami ověřit (např. podle údajů BIQU nebo srovnáním s teploměrem).
